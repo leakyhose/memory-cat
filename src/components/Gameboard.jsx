@@ -33,8 +33,7 @@ export default function GameBoard (
             });
         }
         else{
-            const newCatUrl = getCat();
-            setSeenCats(prev => [...prev, newCatUrl])
+            const newCatUrl = getCat(seenCats);
             return ({
                 url: newCatUrl,
                 seen: false
@@ -45,6 +44,12 @@ export default function GameBoard (
     function handleClick(id){
         if (cat.seen == id){
             setCurrentScore(prev => prev + 1);
+            
+            // Add current cat to seenCats only when it's been shown
+            if (!cat.seen) {
+                setSeenCats(prev => [...prev, cat.url]);
+            }
+            
             setCat(nextCat);
             const newNext = chooseCat();
             preloadImage(newNext.url);
