@@ -12,7 +12,7 @@ function App() {
 
   function restart (){
     if (currentScore > highScore){
-      setHighScore(level);
+      setHighScore(currentScore);
     }
     setCurrentScore(0);
     console.log("Restart")

@@ -20,6 +20,11 @@ export default function GameBoard (
 
     const [seenCats, setSeenCats] = useState([]);
 
+    function preloadImage(url) {
+        const img = new Image();
+        img.src = url;
+    }
+
     function chooseCat() {
         if (seenCats.length > 4 && checkChance(40)){
             return ({
@@ -41,7 +46,9 @@ export default function GameBoard (
         if (cat.seen == id){
             setCurrentScore(prev => prev + 1);
             setCat(nextCat);
-            setNextCat(chooseCat())
+            const newNext = chooseCat();
+            preloadImage(newNext.url);
+            setNextCat(newNext);
         }
         else{
             setScreenState("end");
@@ -49,8 +56,12 @@ export default function GameBoard (
     }
 
     useEffect(() => {
-        setCat(chooseCat());
-        setNextCat(chooseCat());
+        const firstCat = chooseCat();
+        const secondCat = chooseCat();
+        preloadImage(firstCat.url);
+        preloadImage(secondCat.url);
+        setCat(firstCat);
+        setNextCat(secondCat);
     }, []);
 
     return (<div>

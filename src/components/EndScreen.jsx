@@ -8,10 +8,10 @@ export default function EndScreen ({currentScore, highScore, restart}){
         {
             currentScore>=highScore?
             (<div>
-                Current high score: {highScore}
+                New high score of {currentScore}!
             </div>):
             (<div>
-                New high score of {currentScore}!
+                Current high score: {highScore}
             </div>)
         }
 
