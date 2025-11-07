@@ -4,9 +4,12 @@ import { useState, useEffect } from 'react'
 import Button from "./Button.jsx"
 
 export default function GameBoard (
-    {
+    {   
+        currentScore,
         setCurrentScore,
         setScreenState,
+        seenCats,
+        setSeenCats
     }
 ){ 
     const [cat, setCat] = useState({
@@ -17,16 +20,13 @@ export default function GameBoard (
         url: "",
         seen: false
     });
-
-    const [seenCats, setSeenCats] = useState([]);
-
     function preloadImage(url) {
         const img = new Image();
         img.src = url;
     }
 
     function chooseCat() {
-        if (seenCats.length > 4 && checkChance(40)){
+        if (seenCats.length > 4 && checkChance(20 + Math.max(2*currentScore, 20))){
             return ({
                 url: getRandomArray(seenCats),
                 seen: true
@@ -59,23 +59,25 @@ export default function GameBoard (
         const firstCat = chooseCat();
         const secondCat = chooseCat();
         preloadImage(firstCat.url);
-        preloadImage(secondCat.url);
         setCat(firstCat);
+        preloadImage(secondCat.url);
         setNextCat(secondCat);
     }, []);
 
-    return (<div>
-        {cat.url && <img src={cat.url} />}
-        <div>
-            <Button
-            title = "Seen"
-            handleClick = {() => handleClick(true)}
-            />
-            <Button
-            title = "New"
-            handleClick = {() => handleClick(false)}
-            />
-        </div>
-    </div>)
+    return (
+        <>
+            {cat.url && <img src={cat.url} alt="Cat" />}
+            <div className="button-section">
+                <Button
+                title = "Seen"
+                handleClick = {() => handleClick(true)}
+                />
+                <Button
+                title = "New"
+                handleClick = {() => handleClick(false)}
+                />
+            </div>
+        </>
+    )
 
 }

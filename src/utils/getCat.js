@@ -1,3 +1,3 @@
 export default function getCat() {
-    return `https://cataas.com/cat?width=200&height=200&random=${Math.random()}`;
+    return `https://cataas.com/cat?height=200&width=200&random=${Math.random()}`;
 }
