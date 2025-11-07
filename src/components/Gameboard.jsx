@@ -1,46 +1,70 @@
 import { checkChance, getRandomArray } from "../utils/probabilityUtil";
 import getCat from "../utils/getCat";
 import { useState, useEffect } from 'react'
+import Button from "./Button.jsx"
 
 export default function GameBoard (
     {
-        currentScore,
         setCurrentScore,
-        setScreenState
+        setScreenState,
     }
 ){ 
-    const [card, setCard] = useState({
+    const [cat, setCat] = useState({
         url: "",
         seen: false
     });
-    const [seenCards, setSeenCards] = useState([]);
+    const [nextCat, setNextCat] = useState({
+        url: "",
+        seen: false
+    });
 
-    async function chooseCard() {
-        if (seenCards.length > 4 && checkChance(40)){
-            setCard({
-                url: getRandomArray(seenCards),
+    const [seenCats, setSeenCats] = useState([]);
+
+    function chooseCat() {
+        if (seenCats.length > 4 && checkChance(40)){
+            return ({
+                url: getRandomArray(seenCats),
                 seen: true
             });
         }
         else{
-            setCard({
-                url: getCat(),
+            const newCatUrl = getCat();
+            setSeenCats(prev => [...prev, newCatUrl])
+            return ({
+                url: newCatUrl,
                 seen: false
             });
-            setSeenCards(prev => [...prev, card.url]);
         }
     }
 
-    
-    
+    function handleClick(id){
+        if (cat.seen == id){
+            setCurrentScore(prev => prev + 1);
+            setCat(nextCat);
+            setNextCat(chooseCat())
+        }
+        else{
+            setScreenState("end");
+        }
+    }
+
     useEffect(() => {
-        chooseCard();
+        setCat(chooseCat());
+        setNextCat(chooseCat());
     }, []);
 
-
-
-    return <div>
-        <img src={card} />
-    </div>
+    return (<div>
+        {cat.url && <img src={cat.url} />}
+        <div>
+            <Button
+            title = "Seen"
+            handleClick = {() => handleClick(true)}
+            />
+            <Button
+            title = "New"
+            handleClick = {() => handleClick(false)}
+            />
+        </div>
+    </div>)
 
 }

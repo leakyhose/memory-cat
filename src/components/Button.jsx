@@ -1,5 +1,8 @@
-export default function Button() {
+export default function Button({title, handleClick}) {
+
     return <div>
-        <button type="button" class="btn btn-secondary">Secondary</button>
+        <button className="btn" id={title} onClick = {handleClick}>
+            {title}
+        </button>
     </div>
 }

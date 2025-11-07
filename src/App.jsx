@@ -6,15 +6,17 @@ import Gameboard from './components/Gameboard'
 import EndScreen from './components/EndScreen'
 
 function App() {
-  const [currentScore, setScore] = useState(0);
-  const [highScore, setCurrentScore] = useState(0);
+  const [currentScore, setCurrentScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
   const [screenState, setScreenState] = useState("game")
 
   function restart (){
-    if (level > highLevel){
+    if (currentScore > highScore){
       setHighScore(level);
     }
-    setScore(0);
+    setCurrentScore(0);
+    console.log("Restart")
+    setScreenState("game");
 
   }
 
@@ -23,20 +25,24 @@ function App() {
     {
       screenState === "game" ? 
       (
-        <>
+        <div>
           <Header/>
           <Scoreboard currentScore={currentScore} highScore={highScore}/>
           <Gameboard 
-          currentScore = {currentScore} 
-          setCurrentScore={setCurrentScore}
-          setScreenState={setScreenState}/> 
-        </>
+            currentScore = {currentScore} 
+            setCurrentScore = {setCurrentScore}
+            setScreenState = {setScreenState}/> 
+        </div>
       ):
       (
-        <>
+        <div>
           <Header/>
-          <EndScreen/>
-        </>
+          <EndScreen
+          currentScore = {currentScore}
+          highScore = {highScore}
+          restart = {restart}
+          />
+        </div>
       )
     }
   </div>)
