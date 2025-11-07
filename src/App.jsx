@@ -7,7 +7,7 @@ import EndScreen from './components/EndScreen'
 
 function App() {
   const [currentScore, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(0);
+  const [highScore, setCurrentScore] = useState(0);
   const [screenState, setScreenState] = useState("game")
 
   function restart (){
