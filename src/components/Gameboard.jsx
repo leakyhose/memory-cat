@@ -26,7 +26,7 @@ export default function GameBoard (
     }
 
     function chooseCat() {
-        if (seenCats.length > 4 && checkChance(20 + Math.max(2*currentScore, 20))){
+        if (seenCats.length > 4 && checkChance(20 + Math.max(3 * currentScore, 20))){
             return ({
                 url: getRandomArray(seenCats),
                 seen: true
