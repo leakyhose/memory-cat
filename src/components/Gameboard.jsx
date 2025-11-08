@@ -46,7 +46,7 @@ export default function GameBoard (
         if (cat.seen === id){
             setCurrentScore(prev => prev + 1);
             
-            // Add current cat to seenCats only if it was a NEW cat
+
             if (!cat.seen) {
                 setSeenCats(prev => [...prev, cat.url]);
             }
