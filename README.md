@@ -1,1 +1,1 @@
-Memorize cats
+Simple react app testing memorization with cats.
