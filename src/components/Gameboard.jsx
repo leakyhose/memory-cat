@@ -26,9 +26,10 @@ export default function GameBoard (
     }
 
     function chooseCat() {
-        if (seenCats.length > 4 && checkChance(20 + Math.min(4 * currentScore, 20))){
+        if (seenCats.length > 3 && checkChance(30 + Math.min(currentScore, 10))){
+            const repeatedUrl = getRandomArray(seenCats);
             return ({
-                url: getRandomArray(seenCats),
+                url: repeatedUrl,
                 seen: true
             });
         }
@@ -42,10 +43,10 @@ export default function GameBoard (
     }
 
     function handleClick(id){
-        if (cat.seen == id){
+        if (cat.seen === id){
             setCurrentScore(prev => prev + 1);
             
-            // Add current cat to seenCats only when it's been shown
+            // Add current cat to seenCats only if it was a NEW cat
             if (!cat.seen) {
                 setSeenCats(prev => [...prev, cat.url]);
             }
